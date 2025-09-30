@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
+            $table->string('img_url');
             $table->string('type');
             $table->date('year');
+            $table->unsignedInteger('created_at');
         });
     }
 
