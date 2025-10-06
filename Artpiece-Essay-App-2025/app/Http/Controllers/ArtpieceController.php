@@ -12,7 +12,8 @@ class ArtpieceController extends Controller
      */
     public function index()
     {
-        //
+        $artpieces = Artpiece::all();
+        return view('artpieces.index', compact('artpieces'));
     }
 
     /**
