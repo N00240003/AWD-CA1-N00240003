@@ -37,7 +37,7 @@ class ArtpieceController extends Controller
      */
     public function show(Artpiece $artpiece)
     {
-        //
+        return view('artpieces.show')->with('artpiece', $artpiece);
     }
 
     /**
