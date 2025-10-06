@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/artpieces', [ArtpieceController::class, 'index'])->name('artpieces.index');
-    Route::get('/artpieces', [ArtpieceController::class, 'create'])->name('artpieces.create');
+    Route::get('/artpieces/create', [ArtpieceController::class, 'create'])->name('artpieces.create');
     Route::get('/artpieces{artpiece}', [ArtpieceController::class, 'show'])->name('artpieces.show');
     Route::post('/artpieces', [ArtpieceController::class, 'store'])->name('artpieces.store');
 
