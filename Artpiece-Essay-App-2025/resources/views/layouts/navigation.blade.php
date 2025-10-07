@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('artpieces.index')" :active="request()->routeIs('artpieces.index')">
                         {{ __('View All Artpieces') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('artpieces.create')" :active="request()->routeIs('artpieces.create')">
+                        {{ __('Add New Artpieces') }}
+                    </x-nav-link>
                 </div>
             </div>
 

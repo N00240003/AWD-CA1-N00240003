@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Artpiece;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage; // MAY BE NEEDED FOR STORE FUNCTION (For handling file uploads)
 class ArtpieceController extends Controller
 {
     /**
@@ -21,7 +21,7 @@ class ArtpieceController extends Controller
      */
     public function create()
     {
-        //
+        return view('artpieces.create');
     }
 
     /**
@@ -29,7 +29,34 @@ class ArtpieceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validate input data
+        $request->validate([
+        'title' => 'required',
+        'description' => 'required',
+        'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+        'type' => 'required',
+        'year' => 'required|date',
+        ]);
+
+        //Check if image is uploaded and handle it
+        if ($request->hasFile('img_url')) {
+          $imageName = time().'.'.$request->img_url->extension();
+          $request->img_url->move(public_path('images/artpieces'), $imageName);
+        }
+
+        //Create an artpiece record in the database
+        Artpiece::create([
+        'title' => $request->title,
+        'description' => $request->description,
+        'img_url' => $imageName ?? $request->img_url, // Use uploaded image name or URL
+        'type' => $request->type,
+        'year' => $request->year,
+        'created_at' => now(),
+        ]); 
+
+        //Redirect to artpieces index with success message
+        return redirect()->route('artpieces.index')->with('success', 'Artpiece created successfully.');
+
     }
 
     /**

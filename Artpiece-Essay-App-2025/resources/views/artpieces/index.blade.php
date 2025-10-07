@@ -20,6 +20,10 @@
                       <x-artpiece-card
                        :title="$artpiece->title"
                        :image="$artpiece->img_url"
+                       :description="$artpiece->description"
+                       :type="$artpiece->type"
+                       :year="$artpiece->year"
+                       :created_at="$artpiece->created_at"
                      />
                   </a>
                    @endforeach
@@ -29,4 +33,8 @@
         </div>
     </div>
 </x-app-layout>
-    
+
+{{-- Component to display success message that may sent from controller eg when artpiece is created successfully --}}
+<x-alert-success>
+    {{ session('success') }}
+</x-alert-success>
