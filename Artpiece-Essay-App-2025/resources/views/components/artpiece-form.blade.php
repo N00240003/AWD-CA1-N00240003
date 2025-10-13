@@ -2,10 +2,10 @@
     <!-- The best way to take care of the future is to take care of the present moment. - Thich Nhat Hanh -->
 </div>
 
-@props(['artpiece', 'action' ])
+@props(['artpiece', 'action', 'method' ])
 
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
-    @csrf
+    @csrf {{-- security thing  --}}
     @if(isset($method) && ($method === 'PUT' || $method === 'PATCH'))
     @method($method)
 @endif
@@ -37,7 +37,6 @@
             <p class="text-red-600 text-sm">{{ $message }}</p>
         @enderror
     </div>
-
     @isset($artpiece->img_url)
         <div class="mb-4">
             <img src="{{ asset($artpiece->img_url) }}" alt="Current Artpiece Image" class="max-24 h-32 object-cover">
@@ -90,8 +89,14 @@
     </div>
 
     <div>
-        <x-primary-button>
+        <x-primary-button> <!--If it exist-> Update   else-> Create -->
             {{ isset($artpiece) ? 'Update Artpiece' : 'Create Artpiece' }}
         </x-primary-button>
+    </div>
+    <div>
+        <a href="{{ route('artpieces.index') }}"
+        class="inline-flex items-center px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400">
+         Cancel
+        </a>
     </div>
 </form>

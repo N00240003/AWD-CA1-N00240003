@@ -8,6 +8,11 @@
             {{__('All Artpieces')}}
         </h2>
     </x-slot>
+    
+    {{-- Component to display success message that may sent from controller eg when artpiece is created successfully --}}
+    <x-alert-success>
+    {{ session('success') }}
+    </x-alert-success>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -18,6 +23,7 @@
                     @foreach($artpieces as $artpiece)
                     <a href="{{ route('artpieces.show', $artpiece)}}">
                       <x-artpiece-card
+                       :id="$artpiece->id"
                        :title="$artpiece->title"
                        :image="$artpiece->img_url"
                        :description="$artpiece->description"
@@ -26,6 +32,24 @@
                        :created_at="$artpiece->created_at"
                      />
                   </a>
+
+                  {{-- <!--Edit and Delete buttons -->
+                    <!--Edit button route to artpieces.edit, receives $artpiece for editing -->
+                    <a href="{{ route('artpieces.edit', $artpiece) }}" 
+                     class="text-gray-600 bg-violet-300 hover:bg-blue-300 font-bold py-2 px-4 rounded">
+                     Edit
+                    </a>
+
+                    <form action="{{ route('artpieces.destroy', $artpiece) }}" method="POST"
+                     onsubmit="return confirm('Are you sure you want to delete this artpiece?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-500
+                         hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                         Delete
+                        </button>
+                    </form> --}}
+                  
                    @endforeach
                </div>
              </div>
@@ -34,7 +58,3 @@
     </div>
 </x-app-layout>
 
-{{-- Component to display success message that may sent from controller eg when artpiece is created successfully --}}
-<x-alert-success>
-    {{ session('success') }}
-</x-alert-success>

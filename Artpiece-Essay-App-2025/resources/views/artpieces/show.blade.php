@@ -16,6 +16,7 @@
                     <x-artpiece-details 
                         :title="$artpiece->title" 
                         :image="$artpiece->img_url" 
+                        :type="$artpiece->type"
                         :description="$artpiece->description" 
                     />
                 </div>
