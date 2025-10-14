@@ -112,6 +112,7 @@ class ArtpieceController extends Controller
      */
     public function destroy(Artpiece $artpiece)
     {
-        //
+        $artpiece->delete();
+        return to_route('artpieces.index', $artpiece)->with('danger', 'Artpiece deleted successfully.');
     }
 }
