@@ -13,6 +13,7 @@ class ArtpieceController extends Controller
     public function index()
     {
         $artpieces = Artpiece::all();
+        $results = []; //Ensures that an empty array exists for looping in index
         return view('artpieces.index', compact('artpieces'));
     }
 
@@ -31,32 +32,31 @@ class ArtpieceController extends Controller
     {
         //Validate input data
         $request->validate([
-        'title' => 'required',
-        'description' => 'required',
-        'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-        'type' => 'required',
-        'year' => 'required|date',
+            'title' => 'required',
+            'description' => 'required',
+            'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'type' => 'required',
+            'year' => 'required|date',
         ]);
 
         //Check if image is uploaded and handle it
         if ($request->hasFile('img_url')) {
-          $imageName = time().'.'.$request->img_url->extension();
-          $request->img_url->move(public_path('images/artpieces'), $imageName);
+            $imageName = time() . '.' . $request->img_url->extension();
+            $request->img_url->move(public_path('images/artpieces'), $imageName);
         }
 
         //Create an artpiece record in the database
         Artpiece::create([
-        'title' => $request->title,
-        'description' => $request->description,
-        'img_url' => $imageName ?? $request->img_url, // Use uploaded image name or URL
-        'type' => $request->type,
-        'year' => $request->year,
-        'created_at' => now(),
-        ]); 
+            'title' => $request->title,
+            'description' => $request->description,
+            'img_url' => $imageName ?? $request->img_url, // Use uploaded image name or URL
+            'type' => $request->type,
+            'year' => $request->year,
+            'created_at' => now(),
+        ]);
 
         //Redirect to artpieces index with success message
         return redirect()->route('artpieces.index')->with('success', 'Artpiece created successfully.');
-
     }
 
     /**
@@ -80,28 +80,28 @@ class ArtpieceController extends Controller
      */
     public function update(Request $request, Artpiece $artpiece)
     {
-  //Validate input data
+        //Validate input data
         $request->validate([
-        'title' => 'required',
-        'description' => 'required',
-        'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-        'type' => 'required',
-        'year' => 'required|date',
+            'title' => 'required',
+            'description' => 'required',
+            'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'type' => 'required',
+            'year' => 'required|date',
         ]);
 
         //Check if image is uploaded and handle it
         if ($request->hasFile('img_url')) {
-          $imageName = time().'.'.$request->img_url->extension();
-          $request->img_url->move(public_path('images/artpieces'), $imageName);
+            $imageName = time() . '.' . $request->img_url->extension();
+            $request->img_url->move(public_path('images/artpieces'), $imageName);
         }
 
         $artpiece->update([
-        'title' => $request->title,
-        'description' => $request->description,
-        'img_url' => $imageName ?? $request->img_url, // Use uploaded image name or URL
-        'type' => $request->type,
-        'year' => $request->year,
-        'updated_at' => now(),
+            'title' => $request->title,
+            'description' => $request->description,
+            'img_url' => $imageName ?? $request->img_url, // Use uploaded image name or URL
+            'type' => $request->type,
+            'year' => $request->year,
+            'updated_at' => now(),
         ]);
 
         return to_route('artpieces.index', $artpiece)->with('success', 'Artpiece updated successfully.');
@@ -114,5 +114,13 @@ class ArtpieceController extends Controller
     {
         $artpiece->delete();
         return to_route('artpieces.index', $artpiece)->with('danger', 'Artpiece deleted successfully.');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        // $search = "Mona";
+        $artpieces = Artpiece::where('title', 'like', "%$search%")->get();
+        return view('artpieces.index', compact('artpieces'));
     }
 }

@@ -25,6 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/artpieces/{artpiece}/edit', [ArtpieceController::class, 'edit'])->name('artpieces.edit');
     Route::put('/artpieces/{artpiece}', [ArtpieceController::class, 'update'])->name('artpieces.update');
     Route::delete('/artpieces/{artpiece}', [ArtpieceController::class, 'destroy'])->name('artpieces.destroy');
+
+    Route::get('/', 'ArtpieceController@index');
+    // Route::get('/search', 'ArtpieceController@search')->name('artpieces.search');
+     Route::get('/search', [ArtpieceController::class, 'search'])->name('artpieces.search');
+
 });
 
 require __DIR__.'/auth.php';

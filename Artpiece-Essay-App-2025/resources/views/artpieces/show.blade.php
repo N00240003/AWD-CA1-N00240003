@@ -17,6 +17,7 @@
                         :title="$artpiece->title" 
                         :image="$artpiece->img_url" 
                         :type="$artpiece->type"
+                        :year="$artpiece->year"
                         :description="$artpiece->description" 
                     />
                 </div>
