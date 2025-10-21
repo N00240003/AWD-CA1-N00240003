@@ -3,8 +3,12 @@
 //AWD - CA1 : Start of Artpiece-Essay-App-2025
 
 
+//Intro
+The purpose of this CA was to develop a simple web appplication using the Laravel framework. Simply put, Laravel is an environment with tools and ready-made features to make building web applications easier.
+My Artpiece-Essay-App-2025 is at the moment
 
 Topic=Model : Artpieces
+-model
 -mvc
 -A controller is the 'middleman': it decides what action is needed, asks the Model to talk to the database, and then passes the data to the View for display.
 -migrations
