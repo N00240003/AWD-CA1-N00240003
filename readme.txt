@@ -4,8 +4,25 @@
 
 
 //Intro
-The purpose of this CA was to develop a simple web appplication using the Laravel framework. Simply put, Laravel is an environment with tools and ready-made features to make building web applications easier.
-My Artpiece-Essay-App-2025 is at the moment
+The purpose of this CA was to develop a simple web appplication using the Laravel framework. Simply put, Laravel is a PHP based environment with tools and ready-made features to make building web applications easier and keep your code tidier.
+It follows a Model-View-Controller(MVC) architecture, which means it breaks the application into the 3 components mentioned in the name.
+
+My Artpiece-Essay-App-2025 is at the moment a very basic CRUD appplication with one model "Artpieces".
+
+//Features
+The features of my project are the following:
+- 
+-
+-
+
+//Installation
+Step-by-step instructions on how to set up the project locally. For example:
+-Clone the repo
+-Run composer instal
+-Set up .env file
+-Run migrations and seeders
+-Start the development server
+
 
 Topic=Model : Artpieces
 -model

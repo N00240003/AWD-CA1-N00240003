@@ -22,6 +22,10 @@ class ArtpieceController extends Controller
      */
     public function create()
     {
+        // Only allow admin users to access the create artpiece form
+        if (auth()->user()->role !== 'admin') {
+            return redirect()->route('artpieces.index')->with('error', 'You do not have permission to create artpieces.');
+        }
         return view('artpieces.create');
     }
 

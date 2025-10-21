@@ -34,7 +34,8 @@ Route::middleware('auth')->group(function () {
     // This one would not work anyway as I am already using the route for my 'Welcome' page (see line 7-9) 
     //Route::get('/', 'ArtpieceController@index');
     //
-    // The tutorial uses an unfamiliar syntax, so the logic may be correct but is just not meshing with the rest of my code 
+    // The tutorial uses an unfamiliar syntax, so the logic may be correct but is just not meshing with the rest of my code
+    // Laravel 8 and later prefer the "array syntax" for controllers (see lines 21-24 for examples) 
     //Route::get('/search', 'ArtpieceController@search')->name('artpieces.search');
 
     //Final route for my search function
