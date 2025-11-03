@@ -58,21 +58,27 @@
                                         :description="$artpiece->description" :type="$artpiece->type" :year="$artpiece->year" :artpiece="$artpiece"
                                         :created_at="$artpiece->created_at" />
                                 </a>
-                                <a href="{{ route('artpieces.edit', $artpiece) }}"
-                                    class="text-gray-600 bg-violet-300 hover:bg-blue-300 font-bold py-2 px-4 rounded">
-                                    Edit
-                                </a>
-
-                                <form action="{{ route('artpieces.destroy', $artpiece) }}" method="POST"
-                                    onsubmit="return confirm('Are you sure you want to delete this artpiece?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="bg-red-500
-                                    hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                        Delete
+                                <div class="mt-4 flex justify-between">
+                                    {{-- <a href="{{ route('artpieces.edit', $artpiece) }}"
+                                        class="text-gray-600 bg-violet-300 hover:bg-blue-300 font-bold py-2 px-4 rounded">
+                                        Edit
+                                    </a> --}}
+                                    <button
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-3 rounded">
+                                        <a href="{{ route('artpieces.edit', $artpiece) }}">Edit</a>
                                     </button>
-                                </form>
+
+                                    <form action="{{ route('artpieces.destroy', $artpiece) }}" method="POST"
+                                        onsubmit="return confirm('Are you sure you want to delete this artpiece?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="bg-red-500
+                                            hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         @endforeach
 

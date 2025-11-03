@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
+    protected $fillable = [ //$guarded does not let you mass assign any attributes, so we use $fillable to specify which attributes can be mass assigned.
         'name',
         'email',
         'password',

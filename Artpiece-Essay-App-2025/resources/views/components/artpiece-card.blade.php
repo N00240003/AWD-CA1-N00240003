@@ -1,7 +1,8 @@
 @props(['id','title', 'image','artpiece']) {{-- @props defines the properties that may be passed into the component --}}
 
 {{-- Arpiece Card Component --}}
-{{-- <div class="border rounded-lg shadow-md p-6 bg-white hover:shadow-lg transistion duration-300"> --}}
+{{-- <div class="flex"> --}}
     <h4 class="font-bold text-lg">{{ $title }}</h4>
-    <img src="{{ asset( 'images/artpieces/' .$image) }}" alt="{{ $title }}"> 
+    <img class="height:auto aspect-[3/2] object-cover" src="{{ asset( 'images/artpieces/' .$image) }}" alt="{{ $title }}"> 
+    <p class="mt-2 text-gray-600">{{ Str::limit($artpiece->description, 100) }}</p>
 {{-- </div> --}}
