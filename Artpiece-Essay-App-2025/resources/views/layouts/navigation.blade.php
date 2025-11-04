@@ -25,6 +25,8 @@
                             {{ __('Add New Artpieces') }}
                         </x-nav-link>
                     @endif
+
+                    {{-- Create essay will only appear for Author users --}}
                 </div>
             </div>
 

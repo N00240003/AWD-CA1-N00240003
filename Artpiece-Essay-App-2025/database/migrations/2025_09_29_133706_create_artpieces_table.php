@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('img_url');
             $table->string('type');
             $table->date('year');
-           $table->timestamps(); // creates 'created_at' and 'updated_at' as timestamp
+            $table->timestamps(); // creates 'created_at' and 'updated_at' as timestamp
         });
     }
 

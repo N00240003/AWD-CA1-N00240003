@@ -3,6 +3,6 @@
 {{-- Arpiece Card Component --}}
 {{-- <div class="flex"> --}}
     <h4 class="font-bold text-lg">{{ $title }}</h4>
-    <img class="height:auto aspect-[3/2] object-cover" src="{{ asset( 'images/artpieces/' .$image) }}" alt="{{ $title }}"> 
+    <img class="width:auto object-cover" src="{{ asset( 'images/artpieces/' .$image) }}" alt="{{ $title }}"> 
     <p class="mt-2 text-gray-600">{{ Str::limit($artpiece->description, 100) }}</p>
 {{-- </div> --}}

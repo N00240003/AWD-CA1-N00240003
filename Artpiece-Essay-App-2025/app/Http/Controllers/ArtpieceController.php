@@ -40,7 +40,7 @@ class ArtpieceController extends Controller
             'description' => 'required',
             'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'type' => 'required',
-            'year' => 'required|date',
+            'year' => 'required|integer|max:2025',
         ]);
 
         //Check if image is uploaded and handle it
@@ -90,7 +90,7 @@ class ArtpieceController extends Controller
             'description' => 'required',
             'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'type' => 'required',
-            'year' => 'required|date',
+            'year' => 'required|integer|max:2025',
         ]);
 
         //Check if image is uploaded and handle it

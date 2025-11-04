@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //  Schema::table('artpieces', function (Blueprint $table) {
-        // $table->unsignedInteger('updated_at')->after('created_at'); // or use timestamp
-    // });
+        Schema::table('artpieces', function (Blueprint $table) {
+        $table->integer('year')->nullable()->change();
+        });
     }
 
     /**
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-    //      Schema::table('artpieces', function (Blueprint $table) {
-    //     $table->dropColumn('updated_at');
-    // });
+        Schema::table('artpieces', function (Blueprint $table) {
+        $table->date('year')->change();
+        });
     }
 };
