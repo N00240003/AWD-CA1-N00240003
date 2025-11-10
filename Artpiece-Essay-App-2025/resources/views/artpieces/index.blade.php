@@ -63,21 +63,25 @@
                                         class="text-gray-600 bg-violet-300 hover:bg-blue-300 font-bold py-2 px-4 rounded">
                                         Edit
                                     </a> --}}
-                                    <button
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-3 rounded">
-                                        <a href="{{ route('artpieces.edit', $artpiece) }}">Edit</a>
-                                    </button>
+                                    {{-- @auth --}}
+                                        @if (auth()->user()?->role === 'admin')
+                                            <button
+                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-3 rounded">
+                                                <a href="{{ route('artpieces.edit', $artpiece) }}">Edit</a>
+                                            </button>
 
-                                    <form action="{{ route('artpieces.destroy', $artpiece) }}" method="POST"
-                                        onsubmit="return confirm('Are you sure you want to delete this artpiece?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="bg-red-500
-                                            hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                            Delete
-                                        </button>
-                                    </form>
+                                            <form action="{{ route('artpieces.destroy', $artpiece) }}" method="POST"
+                                                onsubmit="return confirm('Are you sure you want to delete this artpiece?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="bg-red-500
+                                                    hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        @endif
+                                    {{-- @endauth --}}
                                 </div>
                             </div>
                         @endforeach

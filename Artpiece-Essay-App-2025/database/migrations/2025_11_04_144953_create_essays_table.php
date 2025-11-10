@@ -16,7 +16,7 @@ return new class extends Migration
             // Cascade delete to remove essays if the associated artpiece is deleted
             $table->foreignId('artpiece_id')->constrained()->onDelete('cascade');
             // Cascade - If the author (user) is deleted, their essays are also deleted
-            $table->foreignId('author_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('essay_title');
             $table->text('essay_text');
             $table->string('tags')->nullable(); // Stores tags a JSON array 
@@ -32,3 +32,4 @@ return new class extends Migration
         Schema::dropIfExists('essays');
     }
 };
+

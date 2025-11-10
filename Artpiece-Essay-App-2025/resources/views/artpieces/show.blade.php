@@ -21,6 +21,22 @@
                         :description="$artpiece->description" 
                     />
                 </div>
+
+                <div class="p-6 text-gray-900">
+                    <h3 class="font-semibold text-lg mb-4">Essays on this Artpiece</h3>
+                    @if($artpiece->essays->isEmpty())
+                        <p class="text-gray-600">No essays have been written for this artpiece yet.</p>
+                    @else
+                        <ul class="space-y-4">
+                            @foreach($artpiece->essays as $essay)
+                                <li class="border rounded-lg p-4 bg-gray-50">
+                                    <h4 class="font-bold text-lg">{{ $essay->essay_title }}</h4>
+                                    <p class="text-gray-700 mt-2">{{ Str::limit($essay->essay_text, 200) }}</p>
+                                    <p class="text-sm text-gray-500 mt-2">By: {{ $essay->user->name }}</p>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
             </div>
         </div>
     </div>

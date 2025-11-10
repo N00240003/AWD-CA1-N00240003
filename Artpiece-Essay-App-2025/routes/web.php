@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ArtpieceController;
+use App\Http\Controllers\EssayController; // So we can use the EssayController
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 // Welcome page route
 Route::get('/', function () {
     return view('welcome');
@@ -12,6 +14,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Resource route for essays
+Route::resource('essays', EssayController::class);
+
+// Grouped routes that require authentication
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
