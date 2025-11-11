@@ -13,7 +13,9 @@ class EssayController extends Controller
      */
     public function index()
     {
-        //
+        $essays = Essay::all();
+        $results = []; //Ensures that an empty array exists for looping in index
+        return view('essays.index', compact('essays'));
     }
 
     /**
@@ -27,7 +29,7 @@ class EssayController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Artpiece $artpiece)
+    public function store(Request $request, Essay $essay)
     {
         $request->validate([
             'artpiece_id' => 'required|integer|max:255',
@@ -37,8 +39,8 @@ class EssayController extends Controller
             'tags' => 'nullable|string|max:255',
         ]);
 
-        $artpiece->essays()->create([
-            'user_id' => auth()->id(), // Set the author as the currently authenticated user
+        $essay->essays()->create([
+            'user_id' => auth()->user()->id(), // Set the author as the currently authenticated user
             'artpiece_id' => $request->input('artpiece_id'),
             'essay_title' => $request->essay_title,
             'essay_text' => $request->essay_text,
@@ -70,7 +72,25 @@ class EssayController extends Controller
      */
     public function update(Request $request, Essay $essay)
     {
-        //
+         //Validate input data
+        $request->validate([
+            'artpiece_id' => 'required',
+            'user_id' => 'required',
+            'essay_title' => 'required|string|max:255',
+            'essay_text' => 'required',
+            'tags' => 'nullable|string|max:255',
+        ]);
+
+        $essay->update([
+            'artpiece_id' => $request->artpiece_id,
+            'user_id' => $request->user()->id(),
+            'essay_title' => $request->essay_title, 
+            'essay_text' => $request->essay_text,
+            'tags' => $request->tags,
+            'updated_at' => now(),
+        ]);
+
+        return to_route('essays.index', $essay)->with('success', 'Essay updated successfully.');
     }
 
     /**

@@ -16,40 +16,22 @@
         type="text" 
         name="title"
         id="title" 
-        value="{{ old('title', $artpiece->title ?? '') }}" 
+        value="{{ old('title', $essay->essay_title ?? '') }}" 
         required 
         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
         @error('title')
             <p class="text-red-600 text-sm">{{ $message }}</p>
         @enderror
     </div>
-    <!-- Image -->
-    <div class="mb-4">
-        <label for="img_url" class="block font-medium text-sm text-gray-700">Image of Artpiece</label>
-        <input 
-        type="file" 
-        name="img_url"
-        id="img_url" 
-        {{ isset($artpiece) ? '' : 'required'}}
-        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"/>
-        @error('img_url')
-            <p class="text-red-600 text-sm">{{ $message }}</p>
-        @enderror
-    </div>
-    @isset($artpiece->img_url)
-        <div class="mb-4">
-            <img src="{{ asset($artpiece->img_url) }}" alt="Current Artpiece Image" class="max-24 h-32 object-cover">
-        </div>
-    @endisset
 
-    <!-- Type -->
+    <!-- Text -->
     <div class="mb-4">
-        <label for="type" class="block font-medium text-sm text-gray-700">Type</label>
+        <label for="essay_text" class="block font-medium text-sm text-gray-700">Your text</label>
         <input 
         type="text" 
-        name="type"
-        id="type" 
-        value="{{ old('type', $artpiece->type ?? '') }}" 
+        name="essay_text"
+        id="essay_text" 
+        value="{{ old('essay_text', $essay->essay_text ?? '') }}" 
         required 
         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
         @error('type')
@@ -57,43 +39,28 @@
         @enderror
     </div>
 
-    <!-- Description -->
+    <!-- Tags -->
     <div class="mb-4">
-        <label for="description" class="block font-medium text-sm text-gray-700">Description</label>
+        <label for="tags" class="block font-medium text-sm text-gray-700">Tags</label>
         <input 
         type="text" 
-        name="description"
-        id="description" 
-        value="{{ old('description', $artpiece->description ?? '') }}" 
+        name="tags"
+        id="tags" 
+        value="{{ old('tags', $essay->tags ?? '') }}" 
         required 
         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-        @error('description')
-            <p class="text-red-600 text-sm">{{ $message }}</p>
-        @enderror
-    </div>
-
-    <!-- Year -->
-    <div class="mb-4">
-        <label for="year" class="block font-medium text-sm text-gray-700">Year</label>
-        <input 
-        type="text" 
-        name="year"
-        id="year" 
-        value="{{ old('year', $artpiece->year ?? '') }}" 
-        required 
-        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-        @error('year')
+        @error('tags')
             <p class="text-red-600 text-sm">{{ $message }}</p>
         @enderror
     </div>
 
     <div>
         <x-primary-button> <!--If it exist-> Update   else-> Create -->
-            {{ isset($artpiece) ? 'Update Artpiece' : 'Create Artpiece' }}
+            {{ isset($essay) ? 'Update Essay' : 'Create Essay' }}
         </x-primary-button>
     </div>
     <div>
-        <a href="{{ route('artpieces.index') }}"
+        <a href="{{ route('essays.index') }}"
         class="inline-flex items-center px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400">
          Cancel
         </a>
