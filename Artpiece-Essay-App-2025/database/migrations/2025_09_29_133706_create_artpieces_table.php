@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('img_url');
+            $table->string('img_url')->nullable();
             $table->string('type');
             $table->string('year')->nullable();
             $table->timestamps(); // creates 'created_at' and 'updated_at' as timestamp

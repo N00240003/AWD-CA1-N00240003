@@ -44,6 +44,9 @@ class EssayController extends Controller
             'essay_text' => $request->essay_text,
             'tags' => $request->tags,
         ]);
+
+        //Redirect to essays index with success message
+        return redirect()->route('essays.index')->with('success', 'Essay added successfully.');
     }
 
     /**
