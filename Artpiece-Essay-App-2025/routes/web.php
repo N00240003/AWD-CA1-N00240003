@@ -15,7 +15,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Resource route for essays
+
+// Creates all CRUD routes for EssayController
 Route::resource('essays', EssayController::class);
+// Here we are overwriting the 'store' route, so we can accept artpiece ID as a parameter
+Route::post('artpieces/{artpiece}/essays', [EssayController::class, 'store'])->name('essays.store');
 
 // Grouped routes that require authentication
 Route::middleware('auth')->group(function () {

@@ -31,11 +31,11 @@
                     </x-nav-link>
 
                     {{-- Create essay will only appear for logged in users --}}
-                    @auth
+                    {{-- @auth
                         <x-nav-link :href="route('essays.create')" :active="request()->routeIs('essays.create')">
                             {{ __('Write New Essay') }}
                         </x-nav-link>
-                    @endauth
+                    @endauth --}}
                 </div>
             </div>
 

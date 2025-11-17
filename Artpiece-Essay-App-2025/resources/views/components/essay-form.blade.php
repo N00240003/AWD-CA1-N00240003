@@ -14,9 +14,9 @@
         <label for="title" class="block font-medium text-sm text-gray-700">Title</label>
         <input 
         type="text" 
-        name="title"
-        id="title" 
-        value="{{ old('title', $essay->essay_title ?? '') }}" 
+        name="essay_title"
+        id="essay_title" 
+        value="{{ old('essay_title', $essay->essay_title ?? '') }}" 
         required 
         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
         @error('title')
@@ -59,10 +59,17 @@
             {{ isset($essay) ? 'Update Essay' : 'Create Essay' }}
         </x-primary-button>
     </div>
-    <div>
+
+    {{-- The history.back() method loads the previous URL (page) in the history list.
+     The history.back() method only works if a previous page exists. --}}
+    <button type="button" onclick="window.history.back()" class="inline-flex items-center px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400">
+        Cancel
+    </button>
+
+    {{-- <div>
         <a href="{{ route('essays.index') }}"
         class="inline-flex items-center px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400">
          Cancel
         </a>
-    </div>
+    </div> --}}
 </form>

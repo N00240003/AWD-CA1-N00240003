@@ -40,7 +40,7 @@ class EssayController extends Controller
         ]);
 
         $essay->essays()->create([
-            'user_id' => auth()->user()->id(), // Set the author as the currently authenticated user
+            'user_id' => auth()->id(), // Set the author as the currently authenticated user
             'artpiece_id' => $request->input('artpiece_id'),
             'essay_title' => $request->essay_title,
             'essay_text' => $request->essay_text,
@@ -64,7 +64,12 @@ class EssayController extends Controller
      */
     public function edit(Essay $essay)
     {
-        //
+        // Checking to see if the user is the owner of the essay or an admin
+        if (auth()->id() !== $essay->user_id && auth()->user()->role !== 'admin') {
+            return redirect()->route('artpiece.index')->with('error', 'You do not have permission to edit this essay.');
+        }
+        // Passing the artpiece and essay objects to the edit view as they're both needed
+        return view('essays.edit', compact('essay'));
     }
 
     /**
@@ -72,6 +77,11 @@ class EssayController extends Controller
      */
     public function update(Request $request, Essay $essay)
     {
+        //Check if the user is the owner of the essay or an admin
+        if (auth()->id() !== $essay->user_id && auth()->user()->role !== 'admin') {
+            return redirect()->route('essays.index')->with('error', 'You do not have permission to edit this essay.');
+        }
+
          //Validate input data
         $request->validate([
             'artpiece_id' => 'required',
@@ -81,16 +91,19 @@ class EssayController extends Controller
             'tags' => 'nullable|string|max:255',
         ]);
 
-        $essay->update([
-            'artpiece_id' => $request->artpiece_id,
-            'user_id' => $request->user()->id(),
-            'essay_title' => $request->essay_title, 
-            'essay_text' => $request->essay_text,
-            'tags' => $request->tags,
-            'updated_at' => now(),
-        ]);
+        // $essay->update([
+        //     'artpiece_id' => $request->artpiece_id,
+        //     'user_id' => $request->user()->id(),
+        //     'essay_title' => $request->essay_title, 
+        //     'essay_text' => $request->essay_text,
+        //     'tags' => $request->tags,
+        //     'updated_at' => now(),
+        // ]);
 
-        return to_route('essays.index', $essay)->with('success', 'Essay updated successfully.');
+        // Only updating the fields that are allowed to be changed
+        $essay->update($request->only(['essay_title', 'essay_text', 'tags']));
+
+        return redirect()->route('artpieces.show', $essay->artpiece_id)->with('success', 'Essay updated successfully.');
     }
 
     /**
@@ -98,6 +111,7 @@ class EssayController extends Controller
      */
     public function destroy(Essay $essay)
     {
-        //
+       $essay->delete();
+        return to_route('artpieces.index', $essay)->with('danger', 'Essay deleted successfully.');
     }
 }

@@ -43,7 +43,7 @@
                             <div
                                 class="border rounded-lg shadow-md p-6 bg-white hover:shadow-lg transistion duration-300">
                                 <a href="{{ route('essays.show', $essay) }}">
-                                    <x-essay-card :id="$essay->id" :title="$essay->title" :image="$essay->img_url"
+                                    <x-essay-card :id="$essay->id" :essay_title="$essay->title" 
                                         :description="$essay->description" :type="$essay->type" :year="$essay->year" :essay="$essay"
                                         :created_at="$essay->created_at" />
                                 </a>

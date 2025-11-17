@@ -12,11 +12,12 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="font-semibold text-lg mb-4">Edit Essay:</h3>
-                    <!-- Use the artpiece-form component for the form -->
-                    <x-artpiece-form 
-                        :artpiece="$artpiece" 
-                        :action="route('artpieces.update', $artpiece)" 
-                        method="PUT" />
+                    <!-- Use the essay-form component for the form -->
+                    <x-essay-form 
+                        :action="route('essays.update', $essay)" 
+                        :method="'PUT'"
+                        :essay="$essay"
+                    />
                 </div>
             </div>
         </div>
