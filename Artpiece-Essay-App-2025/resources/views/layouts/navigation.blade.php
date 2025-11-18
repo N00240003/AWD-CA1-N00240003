@@ -30,6 +30,10 @@
                         {{ __('View All Essays') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('artists.index')" :active="request()->routeIs('artists.index')">
+                        {{ __('View All Artists') }}
+                    </x-nav-link>
+
                     {{-- Create essay will only appear for logged in users --}}
                     {{-- @auth
                         <x-nav-link :href="route('essays.create')" :active="request()->routeIs('essays.create')">

@@ -9,7 +9,7 @@
     @method($method)
 @endif
 
-    <!-- Title -->
+    <!-- Essay Title -->
     <div class="mb-4">
         <label for="title" class="block font-medium text-sm text-gray-700">Title</label>
         <input 
@@ -24,7 +24,7 @@
         @enderror
     </div>
 
-    <!-- Text -->
+    <!-- Essay Text -->
     <div class="mb-4">
         <label for="essay_text" class="block font-medium text-sm text-gray-700">Your text</label>
         <input 

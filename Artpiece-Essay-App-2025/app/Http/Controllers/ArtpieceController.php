@@ -125,6 +125,7 @@ class ArtpieceController extends Controller
         return to_route('artpieces.index', $artpiece)->with('danger', 'Artpiece deleted successfully.');
     }
 
+    // Search function for artpieces that matches titles
     public function search(Request $request)
     {
         $search = $request->input('search');

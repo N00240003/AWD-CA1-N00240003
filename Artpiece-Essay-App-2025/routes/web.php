@@ -53,6 +53,11 @@ Route::middleware('auth')->group(function () {
 
     //Final route for my search function
     Route::get('/search', [ArtpieceController::class, 'search'])->name('artpieces.search');
+    //End of attempted tutorial
+
+    //Additional search routes for Artists and Essays
+    Route::get('/artist/search', [ArtistController::class, 'artistsearch'])->name('artists.search');
+    Route::get('/essay/search', [EssayController::class, 'essaysearch'])->name('essays.search');
 });
 
 require __DIR__ . '/auth.php';

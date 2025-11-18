@@ -1,8 +1,10 @@
-
+<div>
+    <!-- Knowing is not enough; we must apply. Being willing is not enough; we must do. - Leonardo da Vinci -->
+</div>
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Essay Details') }}
+            {{ __('Artist Details') }}
         </h2>
     </x-slot>
 
@@ -10,22 +12,23 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h3 class="font-semibold text-lg mb-4">Essay Details</h3>
-                    <x-essay-details 
-                        :essay_title="$essay->essay_title" 
-                        :essay_text="$essay->essay_text" 
-                        :tags="$essay->tags"
-                        {{-- :author="$users->name"  --}}
+                    <h3 class="font-semibold text-lg mb-4">Artist Details</h3>
+                    <x-artist-details 
+                        :title="$artist->title" 
+                        :image="$artist->img_url" 
+                        :type="$artist->type"
+                        :year="$artist->year"
+                        :description="$artist->description" 
                     />
                 </div>
 
-                {{-- <div class="p-6 text-gray-900">
-                    <h3 class="font-semibold text-lg mb-4">Artists related </h3>
-                    @if($essay->essays->isEmpty())
-                        <p class="text-gray-600">No essays have been written for this essay yet.</p>
+                <div class="p-6 text-gray-900">
+                    <h3 class="font-semibold text-lg mb-4">Essays on this Artist</h3>
+                    @if($artist->essays->isEmpty())
+                        <p class="text-gray-600">No essays have been written for this artist yet.</p>
                     @else
                         <ul class="space-y-4">
-                            @foreach($essay->essays as $essay)
+                            @foreach($artist->essays as $essay)
                                 <li class="border rounded-lg p-4 bg-gray-50">
                                     <h4 class="font-bold text-lg">{{ $essay->essay_title }}</h4>
                                     <p class="text-gray-700 mt-2">{{ Str::limit($essay->essay_text, 200) }}</p>
@@ -49,7 +52,8 @@
                             @endforeach
                         </ul>
                     @endif
-                </div> --}}
+                </div>
+
 
             </div>
         </div>

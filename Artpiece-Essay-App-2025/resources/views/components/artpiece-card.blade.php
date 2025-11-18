@@ -1,4 +1,5 @@
-@props(['id','title', 'image','artpiece']) {{-- @props defines the properties that may be passed into the component --}}
+@props(['id','title', 'image','artpiece']) 
+{{-- @props defines the properties that may be passed into the component --}}
 
 {{-- Arpiece Card Component --}}
 {{-- <div class="flex"> --}}
