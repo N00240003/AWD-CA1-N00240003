@@ -24,4 +24,5 @@ class Artist extends Model
     {
         return $this->belongsToMany(Artpiece::class);
     }
+
 }

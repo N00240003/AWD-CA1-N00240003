@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\ArtpieceController;
-use App\Http\Controllers\EssayController; // So we can use the EssayController
+use App\Http\Controllers\EssayController;  // So we can use the EssayController
+use App\Http\Controllers\ArtistController; // So we can use the ArtistController
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,18 +15,20 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Resource route for essays
 
 // Creates all CRUD routes for EssayController
 Route::resource('essays', EssayController::class);
 // Here we are overwriting the 'store' route, so we can accept artpiece ID as a parameter
 Route::post('artpieces/{artpiece}/essays', [EssayController::class, 'store'])->name('essays.store');
 
-// Grouped routes that require authentication
+// Grouped routes that require authentication (middleware 'auth')
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Resource route for artists
+    Route::resource('artists', ArtistController::class);
 
     //Routes for Index, Create and Show {Artpieces}
     Route::get('/artpieces', [ArtpieceController::class, 'index'])->name('artpieces.index');

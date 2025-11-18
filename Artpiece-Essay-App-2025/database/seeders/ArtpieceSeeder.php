@@ -65,7 +65,7 @@ class ArtpieceSeeder extends Seeder{
         foreach ($artpieces as $artpieceData) {
             // Insert artpiece into artpieces table
             $artpiece = Artpiece::create(array_merge($artpieceData, ['created_at' => $currentTimestamp, 'updated_at' => $currentTimestamp]));
-
+            // Select 1 or 2 random artists from the artists table
             $artists = Artist::inRandomOrder()->take(rand(1, 2))->pluck('id');
 
             // Attach selected artists to the artpiece
