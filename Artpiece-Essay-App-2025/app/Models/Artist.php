@@ -25,4 +25,9 @@ class Artist extends Model
         return $this->belongsToMany(Artpiece::class);
     }
 
+    // Define relationship to essays through artpieces
+    public function essays()
+    {
+        return $this->hasMany(Essay::class, 'artpiece_id');
+    }
 }

@@ -14,16 +14,18 @@
                 <div class="p-6 text-gray-900">
                     <h3 class="font-semibold text-lg mb-4">Artist Details</h3>
                     <x-artist-details 
-                        :title="$artist->title" 
-                        :image="$artist->img_url" 
-                        :type="$artist->type"
-                        :year="$artist->year"
-                        :description="$artist->description" 
+                        :name="$artist->name" 
+                        :nationality="$artist->nationality" 
+                        :birth_date="$artist->birth_date"
+                        :death_date="$artist->death_date"
+                        :bio="$artist->bio" 
+                        :movement="$artist->movement"
+                        :portrait_url="$artist->portrait_url"
                     />
                 </div>
 
                 <div class="p-6 text-gray-900">
-                    <h3 class="font-semibold text-lg mb-4">Essays on this Artist</h3>
+                    <h3 class="font-semibold text-lg mb-4">Essays on this Artist's works</h3>
                     @if($artist->essays->isEmpty())
                         <p class="text-gray-600">No essays have been written for this artist yet.</p>
                     @else

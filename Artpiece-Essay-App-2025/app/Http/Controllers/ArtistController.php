@@ -73,8 +73,8 @@ class ArtistController extends Controller
      */
     public function show(Artist $artist)
     {
-        $artist->load('artists.artpieces'); //Eager load related artpieces
-        return view('artists.show', compact('artpiece'));
+        $artist->load('artpieces'); //Eager load related artpieces
+        return view('artists.show', compact('artist'));
     }
 
     /**

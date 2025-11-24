@@ -54,10 +54,16 @@
                             <div
                                 class="border rounded-lg shadow-md p-6 bg-white hover:shadow-lg transistion duration-300">
                                 <a href="{{ route('artists.show', $artist) }}">
-                                    <x-artist-card :id="$artist->id" :name="$artist->name" :nationality="$artist->nationality"
-                                        :birth_date="$artist->birth_date" :death_date="$artist->death_date" :bio="$artist->bio" :movement="$artist->movement"
+                                    <x-artist-card :id="$artist->id" 
+                                        :name="$artist->name" 
+                                        :nationality="$artist->nationality"
+                                        :birth_date="$artist->birth_date" 
+                                        :death_date="$artist->death_date" 
+                                        :bio="$artist->bio" 
+                                        :movement="$artist->movement"
                                         :portrait_url="$artist->portrait_url"
-                                        :created_at="$artist->created_at" />
+                                        :created_at="$artist->created_at" 
+                                    />
                                 </a>
                                 <div class="mt-4 flex justify-between">
                                     {{-- <a href="{{ route('artists.edit', $artist) }}"

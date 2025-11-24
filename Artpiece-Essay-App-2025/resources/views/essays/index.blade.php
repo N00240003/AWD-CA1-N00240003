@@ -43,8 +43,11 @@
                             <div
                                 class="border rounded-lg shadow-md p-6 bg-white hover:shadow-lg transistion duration-300">
                                 <a href="{{ route('essays.show', $essay) }}">
-                                    <x-essay-card :id="$essay->id" :essay_title="$essay->title" 
-                                        :description="$essay->description" :type="$essay->type" :year="$essay->year" :essay="$essay"
+                                    <x-essay-card 
+                                        :id="$essay->id" 
+                                        :essay_title="$essay->essay_title" 
+                                        :essay_text="$essay->essay_text" 
+                                        :tags="$essay->tags" 
                                         :created_at="$essay->created_at" />
                                 </a>
                                 <div class="mt-4 flex justify-between">

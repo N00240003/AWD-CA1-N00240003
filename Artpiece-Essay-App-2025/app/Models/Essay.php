@@ -12,7 +12,7 @@ class Essay extends Model
 
     protected $fillable = [
         'artpiece_id',
-        'author_id',
+        'user_id',
         'essay_title',
         'essay_text',
         'tags',
@@ -36,6 +36,6 @@ class Essay extends Model
     // An essay belongs to one author (user)
     // public function author()
     // {
-    //     return $this->belongsTo(User::class, 'author_id');
+    //     return $this->belongsTo(User::class, 'user_id');
     // }
 }
