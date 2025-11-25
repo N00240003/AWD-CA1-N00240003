@@ -12,11 +12,17 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        $artists = Artist::all();
+        // Line 20 gets all artists with their associated artpieces
+        // SELECT * FROM artists;
+        // LEFT JOIN artist_artpiece ON artists.id = artist_artpiece.artist_id
+        // LEFT JOIN artpieces ON artist_artpiece.artpiece_id = artpieces.id;
+
+        $artists = Artist::with('artpieces')->get();
         $results = []; //Ensures that an empty array exists for looping in index
         return view('artists.index', compact('artists'));
     
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -27,8 +33,10 @@ class ArtistController extends Controller
         if (auth()->user()->role !== 'admin') {
             return redirect()->route('artists.index')->with('error', 'You do not have permission to add artists.');
         }
-        return view('artists.create');
+        $artpieces = Artist::all();
+        return view('artists.create', compact('artpieces'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -36,7 +44,10 @@ class ArtistController extends Controller
     public function store(Request $request)
     {
         //Validate input data
-        $request->validate([
+        // Here were using $validated to store the validated data 
+        // so that we don't have to call $request->input('field_name') multiple times in Artist::create() method
+        
+        $validated = $request->validate([
             'name' => 'required',
             'nationality' => 'string|nullable|max:255',
             'birth_date' => 'date|nullable',
@@ -46,46 +57,53 @@ class ArtistController extends Controller
             'portrait_url' => 'string|nullable|max:255',
         ]);
 
-        //Check if image is uploaded and handle it
+        //Get image from request 
         if ($request->hasFile('portrait_url')) {
+            // Give it a unique name
             $imageName = time() . '.' . $request->portrait_url->extension();
+            // Move it to public/images/artists
             $request->portrait_url->move(public_path('images/artists'), $imageName);
+            // Set the portrait_url in validated data to the image name
+            $validated['portrait_url'] = $imageName;
         }
 
-        //Create an artist record in the database
-        Artist::create([
-            'name' => $request->name,
-            'nationality' => $request->nationality,
-            'birth_date' => $request->birth_date,
-            'death_date' => $request->death_date,
-            'bio' => $request->bio,
-            'movement' => $request->movement,
-            'portrait_url' => $imageName ?? $request->portrait_url,
-            'created_at' => now(),
-        ]);
+        $artist = Artist::create($validated);
 
+        // Check to see if user linked artpieces to that artist
+        if ($request->has('artpieces')) {
+            // attach() will create an entry in the pivot table for each artpiece the artist is linked to
+            $artist->artpieces()->attach($request->input('artpieces'));
+        }
         //Redirect to artist's index with success message
         return redirect()->route('artists.index')->with('success', 'Artist created successfully.');
+
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(Artist $artist)
     {
-        $artist->load('artpieces'); //Eager load related artpieces
+        // load() on $artist object will get all the artist's artpiece id 
+        // from the pivot table and then fetch the corresponding artpiece records
+        $artist->load('artpieces'); 
         return view('artists.show', compact('artist'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Artist $artist)
     {
-        {
-        return view('artists.edit')->with('artist', $artist);
+        // Get all artpieces
+        $artpieces = Artist::all();
+        // Get the artpiece IDs associated with the artist
+        $artistArtpieces = $artist->artpieces->pluck('id')->toArray();
+        return view('artists.edit', compact('artist', 'artpieces', 'artistArtpieces'));
     }
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -93,7 +111,7 @@ class ArtistController extends Controller
     public function update(Request $request, Artist $artist)
     {
         //Validate input data
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required',
             'nationality' => 'string|nullable|max:255',
             'birth_date' => 'date|nullable',
@@ -110,19 +128,18 @@ class ArtistController extends Controller
         }
 
         //Create an artist record in the database
-        $artist->update([
-            'name' => $request->name,
-            'nationality' => $request->nationality,
-            'birth_date' => $request->birth_date,
-            'death_date' => $request->death_date,
-            'bio' => $request->bio,
-            'movement' => $request->movement,
-            'portrait_url' => $imageName ?? $request->portrait_url,
-            'updated_at' => now(),
-        ]);
+        $artist->update($validated);
+
+        // Sync artpieces
+        if ($request->has('artpieces')) {
+            $artist->artpieces()->sync($request->input('artpieces'));
+        } else {
+            // If no artpieces selected, detach all
+            $artist->artpieces()->detach();
+        }
 
         //Redirect to artist's index with success message
-        return to_route('artists.index', $artist)->with('success', 'Artist updated successfully.');
+        return redirect()->route('artists.index')->with('success', 'Artist updated successfully.');
     }
 
 
@@ -131,8 +148,9 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
+        $artist->artpieces()->detach(); // Detach all associated artpieces so that foreign key constraints are not violated
         $artist->delete();
-        return to_route('artists.index', $artist)->with('danger', 'Artist deleted successfully.');
+        return to_route('artists.index', $artist)->with('success', 'Artist deleted successfully.');
     }
 
     // Search function for artists 

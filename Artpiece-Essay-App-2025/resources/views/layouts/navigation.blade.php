@@ -15,16 +15,10 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('artpieces.index')" :active="request()->routeIs('artpieces.index')">
                         {{ __('View All Artpieces') }}
                     </x-nav-link>
-
-                    {{-- Create link will only appear for Admin users --}}
-                    @if (auth()->user()?->role === 'admin')
-                        <x-nav-link :href="route('artpieces.create')" :active="request()->routeIs('artpieces.create')">
-                            {{ __('Add New Artpieces') }}
-                        </x-nav-link>
-                    @endif
 
                     <x-nav-link :href="route('essays.index')" :active="request()->routeIs('essays.index')">
                         {{ __('View All Essays') }}
@@ -33,6 +27,16 @@
                     <x-nav-link :href="route('artists.index')" :active="request()->routeIs('artists.index')">
                         {{ __('View All Artists') }}
                     </x-nav-link>
+
+                    {{-- Create link will only appear for Admin users --}}
+                    @if (auth()->user()?->role === 'admin')
+                        <x-nav-link :href="route('artpieces.create')" :active="request()->routeIs('artpieces.create')">
+                            {{ __('Add New Artpieces') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('artists.create')" :active="request()->routeIs('artists.create')">
+                            {{ __('Add New Artists') }}
+                        </x-nav-link>
+                    @endif
 
                     {{-- Create essay will only appear for logged in users --}}
                     {{-- @auth

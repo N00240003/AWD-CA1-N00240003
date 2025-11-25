@@ -8,7 +8,8 @@
     {{-- Artist Portrait --}}
     <img class="width:auto object-cover mb-4 flex justify-center"
          src="{{ asset('images/artists/' . $portrait_url) }}"
-         alt="{{ $name }}">
+         alt="{{ $name }}"
+    >
 
     {{-- Artist Nationality --}}
     <p class="text-gray-500 semi-bold mb-2" style="font-size: 1rem;">
