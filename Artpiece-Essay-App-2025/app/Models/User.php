@@ -46,4 +46,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Define relationship with Artpiece model for favorite artpieces
+    public function favArtpieces()
+    {
+        return $this->belongsToMany(Artpiece::class, 'user_fav_artpieces', 'user_id', 'artpiece_id')->withTimestamps();
+    }
 }

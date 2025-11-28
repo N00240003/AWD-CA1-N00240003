@@ -19,7 +19,8 @@ class ArtistController extends Controller
 
         $artists = Artist::with('artpieces')->get();
         $results = []; //Ensures that an empty array exists for looping in index
-        return view('artists.index', compact('artists'));
+        $movements = Artist::select('movement')->distinct()->pluck('movement');
+        return view('artists.index', compact('artists', 'movements'));
     
     }
 
@@ -154,11 +155,35 @@ class ArtistController extends Controller
     }
 
     // Search function for artists 
-    public function search(Request $request)
+    public function artistsearch(Request $request)
     {
+        $movements = Artist::select('movement')->distinct()->pluck('movement');
         $search = $request->input('search');
         // $search = "Leonardo";
         $artists = Artist::where('name', 'like', "%$search%")->get();
-        return view('artists.index', compact('artists'));
+        return view('artists.index', compact('artists', 'movements', 'search'));
+    }
+    public function artistfilter(Request $request)
+    {
+        //https://shouts.dev/articles/laravel-dd-vs-dump-vs-vardump-vs-printr-with-example
+        // For debugging
+        // dd($request->query('movement'));
+
+        //dd() stands for Dump and Die.
+        // Laravel will display the value of $request->query('movement') (what the browser sends) and stop execution.
+        // This helps verify:
+        // If the form is actually sending the movement parameter.
+        // If $movement is being received correctly.
+
+        // Get distinct movements for the dropdown
+        $movements = Artist::select('movement')->distinct()->pluck('movement');
+        // Apply filter if selected
+        $movement = $request->query('movement');
+
+        $artists = Artist::when($movement, function ($query, $movement) {
+            return $query->where('movement', $movement);
+        })->get();
+
+        return view('artists.index', compact('artists', 'movements', 'movement'));
     }
 }

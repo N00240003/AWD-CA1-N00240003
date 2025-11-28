@@ -36,15 +36,20 @@
                                 </button>
                             </form>
 
-                            {{-- Radiogroup for adding sorting/filtering --}}
-                            {{-- <input checked type="radio" id="sort-none" name="sorting" />
-                            <label for="sort-none">None</label>
-
-                            <input type="radio" id="sort-type-painting" name="sorting" />
-                            <label for="sort-type-painting">Painting</label>
-
-                            <input type="radio" id="sort-type-statue" name="sorting" />
-                            <label for="sort-type-statue">Statue</label> --}}
+                            {{-- Filter by Movement dropdown --}}
+                            <form class="d-flex ms-2" action="{{ route('artists.filter') }}" method="GET">
+                                <select name="movement" onchange="this.form.submit()">
+                                    <option value="">All Movements</option>
+                                    @foreach ($movements as $m)
+                                        <option value="{{ $m }}"
+                                            {{ request('movement') == $m ? 'selected' : '' }}>
+                                            {{ $m }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+                            
+                        </div>
 
                         </div>
                     </nav>

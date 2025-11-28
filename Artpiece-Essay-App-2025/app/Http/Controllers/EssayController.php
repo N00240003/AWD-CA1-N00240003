@@ -118,11 +118,11 @@ class EssayController extends Controller
     }
 
     // Search function for essays that matches titles
-    public function search(Request $request)
+    public function essaysearch(Request $request)
     {
         $search = $request->input('search');
         // $search = "Mona";
-        $essays = Essay::where('title', 'like', "%$search%")->get();
+        $essays = Essay::where('essay_title', 'like', "%$search%")->get();
         return view('essays.index', compact('essays'));
     }
 }

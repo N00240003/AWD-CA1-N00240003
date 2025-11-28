@@ -4,6 +4,7 @@ use App\Http\Controllers\ArtpieceController;
 use App\Http\Controllers\EssayController;  // So we can use the EssayController
 use App\Http\Controllers\ArtistController; // So we can use the ArtistController
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 // Welcome page route
@@ -14,7 +15,13 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
+
+// Route for filtering artpieces by type
+Route::get('/artpieces/filter', [ArtpieceController::class, 'filter'])->name('artpieces.filter');
+// Route for filtering artists by movement
+Route::get('/artists/filter', [ArtistController::class, 'artistfilter'])->name('artists.filter');
 
 // Creates all CRUD routes for EssayController
 Route::resource('essays', EssayController::class);

@@ -1,6 +1,4 @@
-<div>
-    <!-- Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less. - Marie Curie -->
-</div>
+<!-- Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less. - Marie Curie -->
 
 <x-app-layout>
     <x-slot name="header">
@@ -36,15 +34,20 @@
                                     type="submit">Search
                                 </button>
                             </form>
-                            {{-- Radiogroup for adding sorting/filtering --}}
-                            <input checked type="radio" id="sort-none" name="sorting" />
-                            <label for="sort-none">None</label>
-
-                            <input type="radio" id="sort-type-painting" name="sorting" />
-                            <label for="sort-type-painting">Painting</label>
-
-                            <input type="radio" id="sort-type-statue" name="sorting" />
-                            <label for="sort-type-statue">Statue</label>
+                            {{-- Filter by Type dropdown --}}
+                            @if (isset($types))
+                                <form class="d-flex ms-2" action="{{ route('artpieces.filter') }}" method="GET">
+                                    <select name="type" onchange="this.form.submit()">
+                                        <option value="">All Types</option>
+                                        @foreach ($types as $t)
+                                            <option value="{{ $t }}"
+                                                {{ request('type') == $t ? 'selected' : '' }}>
+                                                {{ $t }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </form>
+                            @endif
 
                         </div>
                     </nav>
@@ -64,23 +67,23 @@
                                         Edit
                                     </a> --}}
                                     {{-- @auth --}}
-                                        @if (auth()->user()?->role === 'admin')
-                                            <button
-                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-3 rounded">
-                                                <a href="{{ route('artpieces.edit', $artpiece) }}">Edit</a>
-                                            </button>
+                                    @if (auth()->user()?->role === 'admin')
+                                        <button
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-3 rounded">
+                                            <a href="{{ route('artpieces.edit', $artpiece) }}">Edit</a>
+                                        </button>
 
-                                            <form action="{{ route('artpieces.destroy', $artpiece) }}" method="POST"
-                                                onsubmit="return confirm('Are you sure you want to delete this artpiece?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="bg-red-500
+                                        <form action="{{ route('artpieces.destroy', $artpiece) }}" method="POST"
+                                            onsubmit="return confirm('Are you sure you want to delete this artpiece?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="bg-red-500
                                                     hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        @endif
+                                                Delete
+                                            </button>
+                                        </form>
+                                    @endif
                                     {{-- @endauth --}}
                                 </div>
                             </div>

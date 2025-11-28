@@ -12,9 +12,10 @@ class ArtpieceController extends Controller
      */
     public function index()
     {
+        $types = Artpiece::select('type')->distinct()->pluck('type'); // So that we can filter by type in the view
         $artpieces = Artpiece::all();
         $results = []; //Ensures that an empty array exists for looping in index
-        return view('artpieces.index', compact('artpieces'));
+        return view('artpieces.index', compact('artpieces', 'types'));
     }
 
     /**
@@ -129,8 +130,34 @@ class ArtpieceController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
+        $types = Artpiece::select('type')->distinct()->pluck('type');
         // $search = "Mona";
         $artpieces = Artpiece::where('title', 'like', "%$search%")->get();
-        return view('artpieces.index', compact('artpieces'));
+        return view('artpieces.index', compact('artpieces', 'types', 'search'));
+    }
+
+    // Filter function for artpieces by type
+    public function filter(Request $request)
+    {
+        //https://shouts.dev/articles/laravel-dd-vs-dump-vs-vardump-vs-printr-with-example
+        // For debugging
+        // dd($request->query('type'));
+
+        //dd() stands for Dump and Die.
+        // Laravel will display the value of $request->query('type') (what the browser sends) and stop execution.
+        // This helps verify:
+        // If the form is actually sending the type parameter.
+        // If $type is being received correctly.
+
+        // Get distinct types for the dropdown
+        $types = Artpiece::select('type')->distinct()->pluck('type');
+        // Apply filter if selected
+        $type = $request->query('type');
+
+        $artpieces = Artpiece::when($type, function ($query, $type) {
+            return $query->where('type', $type);
+        })->get();
+
+        return view('artpieces.index', compact('artpieces', 'types', 'type'));
     }
 }

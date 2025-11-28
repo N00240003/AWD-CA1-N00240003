@@ -31,4 +31,11 @@ class Artpiece extends Model
     public function artists(){
         return $this->belongsToMany(Artist::class);
     }
+
+    // Define relationship to users who favorited this artpiece
+    public function favedByUsers()
+    {
+        // return $this->belongsToMany(User::class, 'user_fav_artpieces', 'artpiece_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }   
 }
