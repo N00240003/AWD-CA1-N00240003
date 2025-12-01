@@ -54,8 +54,8 @@ class ArtistController extends Controller
             'birth_date' => 'date|nullable',
             'death_date' => 'date|nullable',
             'bio' => 'string|nullable|max:1000',
-            'movement' => 'varchar|nullable|max:255',
-            'portrait_url' => 'string|nullable|max:255',
+            'movement' => 'string|nullable|max:255',
+            'portrait_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         //Get image from request 
@@ -118,8 +118,8 @@ class ArtistController extends Controller
             'birth_date' => 'date|nullable',
             'death_date' => 'date|nullable',
             'bio' => 'string|nullable|max:1000',
-            'movement' => 'varchar|nullable|max:255',
-            'portrait_url' => 'string|nullable|max:255',
+            'movement' => 'string|nullable|max:255',
+            'portrait_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         //Check if image is uploaded and handle it
