@@ -1,7 +1,7 @@
 <!-- Be present above all else. - Naval Ravikant -->
 
 
-@props(['essay', 'action', 'method' ])
+@props(['essay', 'action', 'method', 'artpiece' ])
 
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
     @csrf {{-- security thing  --}}
@@ -19,7 +19,7 @@
         value="{{ old('essay_title', $essay->essay_title ?? '') }}" 
         required 
         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-        @error('title')
+        @error('essay_title')
             <p class="text-red-600 text-sm">{{ $message }}</p>
         @enderror
     </div>
@@ -34,7 +34,7 @@
         value="{{ old('essay_text', $essay->essay_text ?? '') }}" 
         required 
         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-        @error('type')
+        @error('essay_text')
             <p class="text-red-600 text-sm">{{ $message }}</p>
         @enderror
     </div>

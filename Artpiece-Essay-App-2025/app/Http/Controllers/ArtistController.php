@@ -119,13 +119,14 @@ class ArtistController extends Controller
             'death_date' => 'date|nullable',
             'bio' => 'string|nullable|max:1000',
             'movement' => 'string|nullable|max:255',
-            'portrait_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'portrait_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         //Check if image is uploaded and handle it
         if ($request->hasFile('portrait_url')) {
             $imageName = time() . '.' . $request->portrait_url->extension();
             $request->portrait_url->move(public_path('images/artists'), $imageName);
+            $artist->portrait_url = $imageName;
         }
 
         //Create an artist record in the database

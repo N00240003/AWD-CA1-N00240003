@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Essay;
+use App\Models\Artpiece;
 use Illuminate\Http\Request;
 
 class EssayController extends Controller
@@ -14,6 +15,7 @@ class EssayController extends Controller
     public function index()
     {
         $essays = Essay::all();
+        $artpieces = Artpiece::all();
         $results = []; //Ensures that an empty array exists for looping in index
         return view('essays.index', compact('essays'));
     }
@@ -21,34 +23,34 @@ class EssayController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Artpiece $artpiece)
     {
-         return view('essays.create');
+        
+         return view('essays.create',compact('artpiece'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Essay $essay)
+    public function store(Request $request, Essay $essay,Artpiece $artpiece)
     {
         $request->validate([
-            'essay_id' => 'required|integer|max:255',
-            'user_id' => 'required|string|max:255',
             'essay_title' => 'required|string|max:255',
             'essay_text' => 'required|string',
             'tags' => 'nullable|string|max:255',
         ]);
 
-        $essay->essays()->create([
+        $artpiece->essays()->create([
+            'artpiece_id' => $artpiece->id,
             'user_id' => auth()->id(), // Set the author as the currently authenticated user
-            'essay_id' => $request->input('essay_id'),
             'essay_title' => $request->essay_title,
             'essay_text' => $request->essay_text,
             'tags' => $request->tags,
         ]);
 
+
         //Redirect to essays index with success message
-        return redirect()->route('essays.index')->with('success', 'Essay added successfully.');
+        return redirect()->route('artpieces.show', $artpiece)->with('success', 'Essay added successfully.');
     }
 
     /**

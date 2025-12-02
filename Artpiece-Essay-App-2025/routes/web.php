@@ -24,9 +24,12 @@ Route::get('/artpieces/filter', [ArtpieceController::class, 'filter'])->name('ar
 Route::get('/artists/filter', [ArtistController::class, 'artistfilter'])->name('artists.filter');
 
 // Creates all CRUD routes for EssayController
+Route::get('/essays/create/{artpiece}', [EssayController::class, 'create'])->name('essays.create');
 Route::resource('essays', EssayController::class);
+Route::post('/essays/{artpiece}', [EssayController::class, 'store'])->name('essay.store');
+
 // Here we are overwriting the 'store' route, so we can accept artpiece ID as a parameter
-Route::post('artpieces/{artpiece}/essays', [EssayController::class, 'store'])->name('essays.store');
+// Route::post('artpieces/{artpiece}/essays', [EssayController::class, 'store'])->name('essays.store');
 
 // Grouped routes that require authentication (middleware 'auth')
 Route::middleware('auth')->group(function () {

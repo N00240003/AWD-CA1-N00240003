@@ -1,5 +1,6 @@
 <!-- Simplicity is the ultimate sophistication. - Leonardo da Vinci -->
 
+@props(['action', 'method', 'essay', 'artpiece'])
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -13,7 +14,7 @@
                  <div class="p-6 text-gray-900">
                      <h3 class="semibold text-lg mb-4">Add a new Essay</h3>
                         <x-essay-form 
-                        :action="route('essay.store')" 
+                        :action="route('essay.store', $artpiece)" 
                         :method="'POST'"
                         />
                 </div>

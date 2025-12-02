@@ -71,7 +71,8 @@ class ArtpieceController extends Controller
     {
         // Loads essays related to the artpiece along with their authors
         $artpiece->load('essays.user'); // Eager load essays and their associated users (assuming each essay has a 'user_id' for the author)
-        return view('artpieces.show', compact('artpiece'));
+        $essays = Artpiece::all();
+        return view('artpieces.show', compact('artpiece'), compact('essays'));
         // "compact" is a PHP function that creates an array containing variables and their values
         // It's shorthand for this: 
         // return view('artpieces.show', ['artpiece' => $artpiece]);

@@ -24,6 +24,9 @@
 
                 <div class="p-6 text-gray-900">
                     <h3 class="font-semibold text-lg mb-4">Essays on this Artpiece</h3>
+                    <a href="{{ route('essays.create', $artpiece) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-2 rounded">
+                                        {{ __('Create Essay') }}
+                                    </a>
                     @if($artpiece->essays->isEmpty())
                         <p class="text-gray-600">No essays have been written for this artpiece yet.</p>
                     @else
@@ -38,6 +41,7 @@
                                     <a href="{{ route('essays.edit', $essay) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-2 rounded">
                                         {{ __('Edit Essay') }}
                                     </a>
+                                    
 
                                     <form action="{{ route('essays.destroy', $essay) }}" method="POST">
                                         @csrf
