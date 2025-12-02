@@ -37,7 +37,7 @@
                             {{ __('Add New Artists') }}
                         </x-nav-link>
                         <x-nav-link :href="route('essays.create')" :active="request()->routeIs('essays.create')">
-                            {{ __('Add New Essays') }}
+                            {{ __('Write New Essay') }}
                         </x-nav-link>
                     @endif
 
