@@ -13,10 +13,12 @@
                 <div class="p-6 text-gray-900">
                     <h3 class="font-semibold text-lg mb-4">Edit Artist:</h3>
                     <!-- Use the artist-form component for the form -->
-                    <x-artist-form 
-                        :artist="$artist" 
-                        :action="route('artists.update', $artist)" 
-                        method="PUT" />
+                    <x-artist-form
+                        :artist="$artist"
+                        :action="route('artists.update', $artist)"
+                        method="PUT"
+                        :artist="$artist"
+                        :artpieces="$artpieces" />
                 </div>
             </div>
         </div>

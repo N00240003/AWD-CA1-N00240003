@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
+use App\Models\Artpiece;
 use Illuminate\Http\Request;
 
 class ArtistController extends Controller
@@ -21,7 +22,6 @@ class ArtistController extends Controller
         $results = []; //Ensures that an empty array exists for looping in index
         $movements = Artist::select('movement')->distinct()->pluck('movement');
         return view('artists.index', compact('artists', 'movements'));
-    
     }
 
 
@@ -34,7 +34,7 @@ class ArtistController extends Controller
         if (auth()->user()->role !== 'admin') {
             return redirect()->route('artists.index')->with('error', 'You do not have permission to add artists.');
         }
-        $artpieces = Artist::all();
+        $artpieces = Artpiece::all();
         return view('artists.create', compact('artpieces'));
     }
 
@@ -47,7 +47,7 @@ class ArtistController extends Controller
         //Validate input data
         // Here were using $validated to store the validated data 
         // so that we don't have to call $request->input('field_name') multiple times in Artist::create() method
-        
+
         $validated = $request->validate([
             'name' => 'required',
             'nationality' => 'string|nullable|max:255',
@@ -55,7 +55,7 @@ class ArtistController extends Controller
             'death_date' => 'date|nullable',
             'bio' => 'string|nullable|max:1000',
             'movement' => 'string|nullable|max:255',
-            'portrait_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'portrait_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
         ]);
 
         //Get image from request 
@@ -73,11 +73,10 @@ class ArtistController extends Controller
         // Check to see if user linked artpieces to that artist
         if ($request->has('artpieces')) {
             // attach() will create an entry in the pivot table for each artpiece the artist is linked to
-            $artist->artpieces()->attach($request->input('artpieces'));
+            $artist->artpieces()->sync($request->input('artpieces', []));
         }
         //Redirect to artist's index with success message
         return redirect()->route('artists.index')->with('success', 'Artist created successfully.');
-
     }
 
 
@@ -88,7 +87,7 @@ class ArtistController extends Controller
     {
         // load() on $artist object will get all the artist's artpiece id 
         // from the pivot table and then fetch the corresponding artpiece records
-        $artist->load('artpieces'); 
+        $artist->load('artpieces');
         return view('artists.show', compact('artist'));
     }
 
@@ -99,7 +98,7 @@ class ArtistController extends Controller
     public function edit(Artist $artist)
     {
         // Get all artpieces
-        $artpieces = Artist::all();
+        $artpieces = Artpiece::all();
         // Get the artpiece IDs associated with the artist
         $artistArtpieces = $artist->artpieces->pluck('id')->toArray();
         return view('artists.edit', compact('artist', 'artpieces', 'artistArtpieces'));

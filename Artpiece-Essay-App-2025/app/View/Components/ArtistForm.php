@@ -2,24 +2,24 @@
 
 namespace App\View\Components;
 
-use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class ArtistForm extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    public $action;
+    public $method;
+    public $artist;
+    public $artpieces;
+
+    public function __construct($action = null, $method = 'POST', $artist = null, $artpieces = [])
     {
-        //
+        $this->action = $action;
+        $this->method = $method;
+        $this->artist = $artist;
+        $this->artpieces = $artpieces;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View|Closure|string
+    public function render()
     {
         return view('components.artist-form');
     }

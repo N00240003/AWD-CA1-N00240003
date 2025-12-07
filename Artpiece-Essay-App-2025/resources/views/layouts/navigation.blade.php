@@ -36,9 +36,6 @@
                         <x-nav-link :href="route('artists.create')" :active="request()->routeIs('artists.create')">
                             {{ __('Add New Artists') }}
                         </x-nav-link>
-                        {{-- <x-nav-link :href="route('essays.create')" :active="request()->routeIs('essays.create')">
-                            {{ __('Write New Essay') }}
-                        </x-nav-link> --}}
                     @endif
 
                     {{-- Create essay will only appear for logged in users --}}
